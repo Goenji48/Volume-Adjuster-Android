@@ -15,7 +15,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_notification_mute_black" />
+        android:src="@drawable/ic_notification_mute_white" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:contentDescription="Volume Down Button"
         android:paddingRight="20dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_notification_volume_down_black" />
+        android:src="@drawable/ic_notification_volume_down_white" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
         android:contentDescription="Volume Up Button"
         android:paddingRight="20dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_notification_volume_up_black" />
+        android:src="@drawable/ic_notification_volume_up_white" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:id="@+id/notification_current_volume"
         android:text="0%"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20dp"/>
 
 </LinearLayout>

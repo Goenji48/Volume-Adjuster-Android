@@ -5,7 +5,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,14 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView volumeLabel;
     private AudioManager audioManager;
-    private static NotificationManagerCompat notificationManagerCompat;
-    public static NotificationManagerCompat getNotificationManagerInstance() {
-        return notificationManagerCompat;
-    }
-    private Handler handler;
+    private static VolumeRunnable volumeRunnable;
     private ImageButton btnMute, btnVolumeUp, btnVolumeDown;
     private Button btnStart, btnStop;
-    private float currentVolume;
     private boolean isMute = true;
 
     @Override
@@ -60,7 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         notificationPermission();
         setAudioManager();
-        currentVolumeRunnable().run();
+
+        volumeRunnable = new VolumeRunnable(getApplicationContext(), audioManager);
+
+        volumeRunnable.runVolumeListener(1, volumeLabel, null).run();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(volumeRunnable != null) volumeRunnable.stopVolumeListener();
+        super.onDestroy();
     }
 
     @Override
@@ -90,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
     private void notificationPermission() {
         ActivityResultLauncher launcher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
             if(result) {
-                notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(true);
                 btnStart.setOnClickListener(v -> {
@@ -150,29 +151,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, VolumeService.class);
         stopService(intent);
         Toast.makeText(this, "Service stopped", Toast.LENGTH_SHORT).show();
-    }
-
-    private Runnable currentVolumeRunnable() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-                        * 6.667f;
-
-                volumeLabel.setText(volumeLabel(currentVolume));
-
-                if(VolumeService.getNotificationManagerCompat() != null) {
-                    VolumeService.updateNotification(getApplicationContext(), getResources(), (int) currentVolume);
-                }
-
-                handler = new Handler();
-                handler.postDelayed(this, 1000);
-            }
-        };
-    }
-
-    private String volumeLabel(float currentVolume) {
-        int castCurrentVolume = (int) currentVolume;
-        return "Volume: " + castCurrentVolume + " %";
     }
 }
