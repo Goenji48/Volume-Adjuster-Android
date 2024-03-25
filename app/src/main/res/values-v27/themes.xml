@@ -10,8 +10,13 @@
         <item name="colorPrimary">@color/lime</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:tint">@color/lime</item>
+        <item name="colorOnSurface">@color/black</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Base.Theme.VolumeControl.Button">
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="DefaultAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">

@@ -84,15 +84,10 @@ public class VolumeService extends Service {
     private static Notification notificationService(Context context, String currentVolume) {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context, "NOTIFICATION_CHANNEL");
 
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         PendingIntent muteIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_MUTE"), PendingIntent.FLAG_IMMUTABLE);
         PendingIntent volumeUpIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_VOLUME_UP"), PendingIntent.FLAG_IMMUTABLE);
         PendingIntent volumeDownIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_VOLUME_DOWN"), PendingIntent.FLAG_IMMUTABLE);
 
-        notification.setContentIntent(pendingIntent);
         notification.setSmallIcon(R.drawable.ic_volume);
         notification.setPriority(Notification.PRIORITY_MIN);
         notification.setShowWhen(false);

@@ -3,6 +3,7 @@ package com.goenji.volumeadjuster;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 
 public class NotificationBroadcast extends BroadcastReceiver {
@@ -17,8 +18,16 @@ public class NotificationBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-
         if (action != null) {
+            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("servicePrefs", Context.MODE_PRIVATE);
+                boolean activated = sharedPreferences.getBoolean("serviceActivated", false);
+                if (activated) {
+                    Intent sIntent  = new Intent(context, VolumeService.class);
+                    context.startService(sIntent);
+                }
+            }
+
             if (action.equals("ACTION_MUTE")) {
                 if (isMute) {
                     audioManager.adjustVolume(AudioManager.ADJUST_MUTE, AudioManager.FLAG_PLAY_SOUND);

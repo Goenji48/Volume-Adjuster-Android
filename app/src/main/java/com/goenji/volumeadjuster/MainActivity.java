@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Build;
@@ -28,7 +29,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView volumeLabel;
     private AudioManager audioManager;
     private static VolumeRunnable volumeRunnable;
     private ImageButton btnMute, btnVolumeUp, btnVolumeDown;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         btnVolumeDown = findViewById(R.id.btnVolumeDown);
         btnVolumeUp = findViewById(R.id.btnVolumeUp);
 
-        volumeLabel = findViewById(R.id.main_volume_label);
+        TextView volumeLabel = findViewById(R.id.main_volume_label);
 
         notificationPermission();
         setAudioManager();
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.about) {
             AlertDialog alertDialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(this, R.style.DefaultAlertDialogStyle))
                     .setTitle("About")
-                    .setMessage("Developer: Goenji48 - 2024")
+                    .setMessage("Developer: Goenji48 - 2024" + "\n\n" + "Version 1.1.240324")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(true);
                 btnStart.setOnClickListener(v -> {
-                    startService();
+                    startService(true);
                 });
                 btnStop.setOnClickListener(v -> {
                     stopService();
@@ -137,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
             }});
     }
 
-    private void startService() {
+    private void startService(boolean activated) {
         Intent intent = new Intent(this, VolumeService.class);
+        SharedPreferences sharedPreferences = getSharedPreferences("servicePrefs", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("serviceActivated", activated).apply();
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
         } else {

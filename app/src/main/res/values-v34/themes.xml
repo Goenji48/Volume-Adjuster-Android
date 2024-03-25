@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.Theme.VolumeControl" parent="Theme.Material3.DayNight">
+        <item name="android:tint">@android:color/system_primary_light</item>
+        <item name="android:statusBarColor">@android:color/system_control_activated_light</item>
+        <item name="android:navigationBarColor">@android:color/system_control_activated_light</item>
+        <item name="colorSurface">@android:color/system_control_activated_light</item>
+        <item name="colorSurfaceContainer">@android:color/system_control_activated_light</item>
+        <item name="colorPrimary">@android:color/system_primary_light</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@android:color/system_control_activated_light</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorOnSurface">@color/black</item>
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <style name="Base.Theme.VolumeControl.Button">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="DefaultAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="colorSurfaceContainerHigh">@android:color/system_control_activated_light</item>
+        <item name="colorPrimary">@android:color/system_primary_light</item>
+        <item name="scrimBackground">@android:color/system_primary_light</item>
+    </style>
+</resources>
