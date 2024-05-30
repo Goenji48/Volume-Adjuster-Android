@@ -16,6 +16,7 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -126,11 +127,17 @@ public class MainActivity extends AppCompatActivity {
                 audioManager.adjustVolume(AudioManager.ADJUST_MUTE, AudioManager.FLAG_PLAY_SOUND);
                 isMute = false;
             } else {
-                int nightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if(nightMode == Configuration.UI_MODE_NIGHT_NO) {
-                    btnMute.setColorFilter(new ContextWrapper(this).getColor(R.color.lime));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    TypedValue typedValue = new TypedValue();
+                    getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true);
+                    btnMute.setColorFilter(typedValue.data);
                 } else {
-                    btnMute.setColorFilter(new ContextWrapper(this).getColor(R.color.skyBlue));
+                    int nightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                    if(nightMode == Configuration.UI_MODE_NIGHT_NO) {
+                        btnMute.setColorFilter(new ContextWrapper(this).getColor(R.color.lime));
+                    } else {
+                        btnMute.setColorFilter(new ContextWrapper(this).getColor(R.color.skyBlue));
+                    }
                 }
                 audioManager.adjustVolume(AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_PLAY_SOUND);
                 isMute = true;
