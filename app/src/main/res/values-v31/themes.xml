@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.VolumeControl" parent="Theme.Material3.DayNight">
+        <item name="android:statusBarColor">@android:color/system_neutral1_100</item>
+        <item name="android:navigationBarColor">@android:color/system_neutral1_100</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorSurface">@android:color/system_neutral1_100</item>
+        <item name="colorSurfaceContainer">@android:color/system_neutral1_100</item>
+        <item name="colorPrimary">@android:color/system_accent1_600</item>
+        <item name="colorOnPrimary">@android:color/system_accent1_800</item>
+        <item name="android:tint">@android:color/system_accent1_600</item>
+        <item name="colorOnSurface">@android:color/system_accent1_900</item>
+        <item name="android:windowBackground">@android:color/system_neutral1_100</item>
+        <item name="android:textColor">@android:color/system_neutral1_900</item>
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Base.Theme.VolumeControl.Button">
+        <item name="android:textColor">@android:color/system_neutral1_100</item>
+    </style>
+
+    <style name="DefaultAlertDialogStyle" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="colorSurfaceContainerHigh">@android:color/system_neutral1_100</item>
+        <item name="colorPrimary">@android:color/system_accent1_600</item>
+        <item name="scrimBackground">@android:color/system_accent1_600</item>
+    </style>
+</resources>

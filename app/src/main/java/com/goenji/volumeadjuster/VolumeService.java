@@ -25,7 +25,7 @@ public class VolumeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
@@ -84,9 +84,9 @@ public class VolumeService extends Service {
     private static Notification notificationService(Context context, String currentVolume) {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context, "NOTIFICATION_CHANNEL");
 
-        PendingIntent muteIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_MUTE"), PendingIntent.FLAG_IMMUTABLE);
-        PendingIntent volumeUpIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_VOLUME_UP"), PendingIntent.FLAG_IMMUTABLE);
-        PendingIntent volumeDownIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_VOLUME_DOWN"), PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent muteIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_MUTE"), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent volumeUpIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_VOLUME_UP"), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent volumeDownIntent = PendingIntent.getBroadcast(context, 0, new Intent("ACTION_VOLUME_DOWN"), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         notification.setSmallIcon(R.drawable.ic_volume);
         notification.setPriority(Notification.PRIORITY_MIN);

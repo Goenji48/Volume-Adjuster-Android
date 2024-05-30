@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.about) {
             AlertDialog alertDialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(this, R.style.DefaultAlertDialogStyle))
                     .setTitle("About")
-                    .setMessage("Developer: Goenji48 - 2024" + "\n\n" + "Version 1.1.240324")
+                    .setMessage("Developer: Goenji48 - 2024" + "\n\n" + "Version 1.2.240530")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

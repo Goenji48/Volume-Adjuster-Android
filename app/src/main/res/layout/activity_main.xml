@@ -61,6 +61,7 @@
                 android:id="@+id/main_volume_label"
                 android:layout_marginTop="20dp"
                 android:text="Volume: "
+
                 android:textSize="20sp"
                 android:textAlignment="center"/>
 
