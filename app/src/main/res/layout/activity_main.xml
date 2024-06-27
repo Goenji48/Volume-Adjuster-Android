@@ -9,15 +9,53 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/control_type_tab_layout">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Main" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alarm" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ringtone" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Call" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_stream_type_indicator"
+            android:src="@drawable/ic_music"
+            android:layout_below="@+id/control_type_tab_layout"
+            android:layout_above="@+id/main_content_layout"
+            android:padding="10dp"
+            app:tint="?attr/colorPrimary"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:id="@+id/main_content_layout"
             android:layout_centerVertical="true"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <LinearLayout
@@ -27,67 +65,68 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/btnMute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Mute Button"
+                    app:tint="?attr/colorPrimary"
                     android:background="@android:color/transparent"
+                    android:contentDescription="Mute Button"
                     android:padding="20dp"
-                    android:id="@+id/btnMute"
                     android:src="@drawable/ic_mute" />
 
                 <ImageButton
+                    android:id="@+id/btnVolumeDown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Volume Down Button"
+                    app:tint="?attr/colorPrimary"
                     android:background="@android:color/transparent"
+                    android:contentDescription="Volume Down Button"
                     android:padding="20dp"
-                    android:id="@+id/btnVolumeDown"
                     android:src="@drawable/ic_volume_down" />
 
                 <ImageButton
+                    android:id="@+id/btnVolumeUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Volume Up Button"
+                    app:tint="?attr/colorPrimary"
                     android:background="@android:color/transparent"
+                    android:contentDescription="Volume Up Button"
                     android:padding="20dp"
-                    android:id="@+id/btnVolumeUp"
                     android:src="@drawable/ic_volume_up" />
 
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/main_volume_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/main_volume_label"
                 android:layout_marginTop="20dp"
                 android:text="Volume: "
 
-                android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/main_start_service"
+                    style="@style/Base.Theme.VolumeControl.Button"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="10dp"
-                    android:id="@+id/main_start_service"
-                    style="@style/Base.Theme.VolumeControl.Button"
-                    android:text="Start"
-                    />
+                    android:text="Start" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="60dp"
                     android:id="@+id/main_stop_service"
                     style="@style/Base.Theme.VolumeControl.Button"
-                    android:text="Stop"
-                    />
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:text="Stop" />
 
             </LinearLayout>
 

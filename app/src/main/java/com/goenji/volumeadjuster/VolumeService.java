@@ -33,9 +33,11 @@ public class VolumeService extends Service {
         super.onCreate();
         notificationChannel();
 
+        int streamType = MainActivity.getCurrentStreamType();
+
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         notificationBroadcast = new NotificationBroadcast
-                (audioManager);
+                (audioManager, streamType);
 
         registerReceiver(notificationBroadcast, new IntentFilter("ACTION_MUTE"));
         registerReceiver(notificationBroadcast, new IntentFilter("ACTION_VOLUME_UP"));
@@ -45,7 +47,7 @@ public class VolumeService extends Service {
 
         volumeRunnable = new VolumeRunnable(getApplicationContext(),
                 audioManager);
-        volumeRunnable.runVolumeListener(2,null, notificationManagerCompat).run();
+        volumeRunnable.runVolumeListener(2,null, notificationManagerCompat, streamType).run();
     }
 
     @Override

@@ -9,10 +9,12 @@ import android.media.AudioManager;
 public class NotificationBroadcast extends BroadcastReceiver {
 
     private final AudioManager audioManager;
+    private final int streamType;
     private boolean isMute = true;
 
-    public NotificationBroadcast(AudioManager audioManager) {
+    public NotificationBroadcast(AudioManager audioManager, int streamType) {
         this.audioManager = audioManager;
+        this.streamType = streamType;
     }
 
     @Override
@@ -30,20 +32,20 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
             if (action.equals("ACTION_MUTE")) {
                 if (isMute) {
-                    audioManager.adjustVolume(AudioManager.ADJUST_MUTE, AudioManager.FLAG_PLAY_SOUND);
+                    audioManager.adjustStreamVolume(streamType, AudioManager.ADJUST_MUTE, AudioManager.FLAG_PLAY_SOUND);
                     isMute = false;
                 } else {
-                    audioManager.adjustVolume(AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_PLAY_SOUND);
+                    audioManager.adjustStreamVolume(streamType, AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_PLAY_SOUND);
                     isMute = true;
                 }
             }
 
             if (action.equals("ACTION_VOLUME_UP")) {
-                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+                audioManager.adjustStreamVolume(streamType, AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
             }
 
             if (action.equals("ACTION_VOLUME_DOWN")) {
-                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+                audioManager.adjustStreamVolume(streamType, AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
             }
         }
     }

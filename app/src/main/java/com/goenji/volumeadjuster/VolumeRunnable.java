@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -28,12 +29,23 @@ public class VolumeRunnable implements VolumeListener {
     }
 
     @Override
-    public Runnable runVolumeListener(int runId, @Nullable TextView textView, @Nullable NotificationManagerCompat notificationManagerCompat) {
+    public Runnable runVolumeListener(int runId, @Nullable TextView textView,
+                                      @Nullable NotificationManagerCompat notificationManagerCompat, @NonNull int streamType) {
         runnable = new Runnable() {
             @Override
             public void run() {
-                float currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-                        * 6.667f;
+                float currentVolume = 0f;
+
+                if (streamType == AudioManager.STREAM_MUSIC) {
+                    currentVolume = audioManager.getStreamVolume(streamType)
+                    * 6.667f; //try round to one hundred.
+                } else if (streamType == AudioManager.STREAM_ALARM || streamType == AudioManager.STREAM_RING) {
+                    currentVolume = audioManager.getStreamVolume(streamType)
+                            * 14.295f; //try round to one hundred.
+                } else if (streamType == AudioManager.STREAM_VOICE_CALL) {
+                    currentVolume = audioManager.getStreamVolume(streamType)
+                            * 20f; //try round to one hundred.
+                }
 
                 String volumeLabel = "Volume: " + (int) currentVolume + "%";
 
