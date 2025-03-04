@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.about) {
             AlertDialog alertDialog = new MaterialAlertDialogBuilder(new ContextThemeWrapper(this, R.style.DefaultAlertDialogStyle))
                     .setTitle("About")
-                    .setMessage("Developer: João Luiz (Goenji48) - 2024" + "\n\n" + "Version 1.3.240627")
+                    .setMessage("Developer: João Luiz (Goenji48) - 2025" + "\n\n" + "Version " + BuildConfig.VERSION_NAME)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -147,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void notificationPermission() {
-        ActivityResultLauncher launcher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+        ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
             if(result) {
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(true);
                 btnStart.setOnClickListener(v -> {
-                    startService(true);
+                    startService();
                 });
                 btnStop.setOnClickListener(v -> {
                     stopService();
@@ -200,10 +200,10 @@ public class MainActivity extends AppCompatActivity {
             }});
     }
 
-    private void startService(boolean activated) {
+    private void startService() {
         Intent intent = new Intent(this, VolumeService.class);
         SharedPreferences sharedPreferences = getSharedPreferences("servicePrefs", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean("serviceActivated", activated).apply();
+        sharedPreferences.edit().putBoolean("serviceActivated", true).apply();
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
         } else {
@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void stopService() {
         Intent intent = new Intent(this, VolumeService.class);
+        SharedPreferences sharedPreferences = getSharedPreferences("servicePrefs", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("serviceActivated", false).apply();
         stopService(intent);
         Toast.makeText(this, "Service stopped", Toast.LENGTH_SHORT).show();
     }

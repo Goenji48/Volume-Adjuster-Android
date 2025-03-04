@@ -1,8 +1,6 @@
 package com.goenji.volumeadjuster;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -25,19 +23,13 @@ public class VolumeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        notificationChannel();
-
-        int streamType = MainActivity.getCurrentStreamType();
+        notificationManagerCompat = NotificationManagerCompat.from(this);
+        int streamType = MainActivity.getCurrentStreamType() | AudioManager.STREAM_MUSIC;
 
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        notificationBroadcast = new NotificationBroadcast
-                (audioManager, streamType);
+        notificationBroadcast = new NotificationBroadcast();
+        notificationBroadcast.setStreamType(streamType);
+        notificationBroadcast.setAudioManager(audioManager);
 
         registerReceiver(notificationBroadcast, new IntentFilter("ACTION_MUTE"));
         registerReceiver(notificationBroadcast, new IntentFilter("ACTION_VOLUME_UP"));
@@ -48,6 +40,12 @@ public class VolumeService extends Service {
         volumeRunnable = new VolumeRunnable(getApplicationContext(),
                 audioManager);
         volumeRunnable.runVolumeListener(2,null, notificationManagerCompat, streamType).run();
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 
     @Override
@@ -61,18 +59,6 @@ public class VolumeService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    private void notificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel("NOTIFICATION_CHANNEL",
-                    "Volume Service",
-                    NotificationManager.IMPORTANCE_NONE);
-            if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-                notificationManagerCompat.createNotificationChannel(notificationChannel);
-            }
-        }
     }
 
     public static void updateNotification(Context context, int current) {

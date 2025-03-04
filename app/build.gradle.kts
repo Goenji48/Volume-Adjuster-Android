@@ -6,12 +6,17 @@ android {
     namespace = "com.goenji.volumeadjuster"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     defaultConfig {
         applicationId = "com.goenji.volumeadjuster"
         minSdk = 23
         targetSdk = 33
         versionCode = 1
-        versionName = "1.3.240627"
+        versionName = "1.4.250304"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

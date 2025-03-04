@@ -5,16 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.widget.Toast;
 
 public class NotificationBroadcast extends BroadcastReceiver {
 
-    private final AudioManager audioManager;
-    private final int streamType;
+    private AudioManager audioManager;
+    private int streamType;
     private boolean isMute = true;
 
-    public NotificationBroadcast(AudioManager audioManager, int streamType) {
-        this.audioManager = audioManager;
+    public void setStreamType(int streamType) {
         this.streamType = streamType;
+    }
+
+    public void setAudioManager(AudioManager audioManager) {
+        this.audioManager = audioManager;
     }
 
     @Override

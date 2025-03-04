@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,8 +52,9 @@ public class VolumeRunnable implements VolumeListener {
 
                 if(textView != null) textView.setText(volumeLabel);
 
-                if(notificationManagerCompat != null)
+                if (notificationManagerCompat != null) {
                     VolumeService.updateNotification(context, (int) currentVolume);
+                }
 
                 handler = new Handler();
                 handler.postDelayed(this, 1000);
